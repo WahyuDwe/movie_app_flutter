@@ -7,7 +7,7 @@ import 'package:movie_apps/data/datasources/movie_remote_data_source.dart';
 import 'package:movie_apps/data/models/movie_model.dart';
 import 'package:http/http.dart' as http;
 
-class MovieRemoteDatasourceImpl implements MovieRemotedataSource {
+class MovieRemoteDatasourceImpl implements MovieRemoteDataSource {
   final http.Client client;
 
   MovieRemoteDatasourceImpl({required this.client});

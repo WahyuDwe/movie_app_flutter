@@ -11,7 +11,7 @@ import 'movie_remote_data_source_test.mocks.dart';
 @GenerateMocks([http.Client])
 void main() {
   late MockClient mockHttpClient;
-  late MovieRemotedataSource dataSource;
+  late MovieRemoteDataSource dataSource;
 
   setUp(() {
     mockHttpClient = MockClient();
@@ -27,8 +27,7 @@ void main() {
   const sUrl =
       'https://api.themoviedb.org/3/search/movie?query=$sQuery?api_key=8bdb4d221b7ca95aa2c0ea30b6a3dda4';
 
-  const String sampleApiResponse = '''
-{
+  const String sampleApiResponse = ''' {
   "page": 1,
   "results": [
     {
@@ -51,8 +50,7 @@ void main() {
   ],
   "total_pages": 1,
   "total_results": 1
-}
-''';
+} ''';
 
   group('should perform test for TMDB api', () {
     test('should perfom a GET request on an url to get trending movies',
@@ -81,7 +79,7 @@ void main() {
       verify(mockHttpClient.get(Uri.parse(pUrl)));
     });
 
-    test('should perform a GET request on an url to get searcher movies',
+    test('should perform a GET request on an url to get searches movies',
         () async {
       // arrange
       when(mockHttpClient.get(Uri.parse(sUrl)))
