@@ -16,8 +16,6 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: false,
         elevation: 0,
-        toolbarHeight: 100,
-        backgroundColor: Colors.black,
         title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -40,49 +38,19 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: Container(
-        color: Colors.black,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: 290,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(bckImage),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      bottom: 0,
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(20), // Border radius
-                          ),
-                        ),
-                        child: const Text('▶️ Learn Flutter with Flutter Guys'),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               const SizedBox(height: 20),
-              const Text(
-                'Trending Movies',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Trending Movies',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               BlocBuilder<TrendingMoviesBloc, TrendingMoviesState>(
@@ -109,17 +77,20 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
               // Popular Movies
-              const Text(
-                'Popular Movies',
-                style: TextStyle(
-                    color: Colors.white,
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Popular Movies',
+                  style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
                 builder: (context, state) {
                   if (state is PopularMoviesLoading) {
-                    return const CircularProgressIndicator();
+                    return const Center(child: CircularProgressIndicator());
                   } else if (state is PopularMoviesLoaded) {
                     return MoviesList(movies: state.movies);
                   } else if (state is PopularMoviesError) {

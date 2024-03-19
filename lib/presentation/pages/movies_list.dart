@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_apps/domain/entities/movie.dart';
+import 'package:movie_apps/presentation/widgets/movie_card.dart';
 
 class MoviesList extends StatelessWidget {
   final List<Movie> movies;
@@ -10,16 +11,14 @@ class MoviesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(movies.length);
-    return ListView.builder(
-      itemCount: movies.length,
-      itemBuilder: (context, index) {
-        final movie = movies[index];
-        return ListTile(
-          title: Text(movie.title),
-          subtitle: Text(movie.overview),
-        );
-      },
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: List.generate(movies.length, (index) {
+          final movie = movies[index];
+          return MovieCard(movie);
+        }),
+      ),
     );
   }
 }

@@ -21,9 +21,15 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => getIt<PopularMoviesBloc>()),
-          BlocProvider(create: (context) => getIt<TrendingMoviesBloc>()),
-          BlocProvider(create: (context) => getIt<SearchMoviesBloc>())
+          BlocProvider(
+            create: (context) =>
+                getIt<PopularMoviesBloc>()..add(FetchPopularMovies()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                getIt<TrendingMoviesBloc>()..add(FetchTrendingMovies()),
+          ),
+          BlocProvider(create: (context) => getIt<SearchMoviesBloc>()),
         ],
         child: const HomeScreen(),
       ),
