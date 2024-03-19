@@ -15,7 +15,7 @@ void main() {
 
   setUp(() {
     mockHttpClient = MockClient();
-    dataSource = MovieRemoteDatasourceImpl(client: mockHttpClient);
+    dataSource = MovieRemoteDataSourceImpl(client: mockHttpClient);
   });
 
   const sQuery = 'Interstellar';
