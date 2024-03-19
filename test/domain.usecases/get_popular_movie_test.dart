@@ -38,7 +38,8 @@ void main() {
     final result = await usecase();
 
     // assert
-    expect(result, tMoviesList);
+    expect(result, equals(Right(tMoviesList)));
     verify(mockMovieRepository.getPopularMovies());
+    verifyNoMoreInteractions(mockMovieRepository);
   });
 }

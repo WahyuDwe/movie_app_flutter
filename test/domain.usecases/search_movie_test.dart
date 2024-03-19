@@ -40,7 +40,8 @@ void main() {
     final result = await usecase(tQuery);
 
     // assert
-    expect(result, tMoviesList);
+    expect(result, Right(tMoviesList));
     verify(mockMovieRepository.searchMovies(tQuery));
+    verifyNoMoreInteractions(mockMovieRepository);
   });
 }

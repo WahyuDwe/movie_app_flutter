@@ -39,21 +39,6 @@ void main() {
     )
   ];
 
-  final tMoviesList = [
-    const Movie(
-      id: 1,
-      title: 'Test Movie 1',
-      overview: 'Desc 1',
-      posterPath: '/image1',
-    ),
-    const Movie(
-      id: 2,
-      title: 'Test Movie 2',
-      overview: 'Desc 2',
-      posterPath: '/image2',
-    )
-  ];
-
   test('should get trending movies from the remote data source', () async {
     when(mockMovieRemoteDataSource.getTrendingMovies())
         .thenAnswer((_) async => tMovieModelList);
@@ -85,7 +70,7 @@ void main() {
   });
 
   test(
-      'should return ServerFailure when the call to remote data source is unsuccessfully',
+      'should return ServerFailure when the call trending movie to remote data source is unsuccessfully',
       () async {
     when(mockMovieRemoteDataSource.getTrendingMovies())
         .thenThrow(ServerException());
@@ -96,7 +81,7 @@ void main() {
   });
 
   test(
-      'should return ServerFailure when the call to remote data source is unsuccessfully',
+      'should return ServerFailure when the call search movie to remote data source is unsuccessfully',
       () async {
     when(mockMovieRemoteDataSource.searchMovies(tQuery))
         .thenThrow(ServerException());
