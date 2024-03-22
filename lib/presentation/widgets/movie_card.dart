@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_apps/domain/entities/movie.dart';
 
 class MovieCard extends StatelessWidget {
-  MovieCard(this.movie, {super.key});
+  const MovieCard(this.movie, {super.key});
 
   final Movie movie;
 

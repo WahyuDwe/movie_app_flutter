@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_apps/domain/entities/movie.dart';
@@ -14,11 +16,22 @@ class SearchMoviesBloc extends Bloc<SearchMoviesEvent, SearchMoviesState> {
     on<FetchSearchMovies>((event, emit) async {
       emit(SearchMoviesLoading());
       final failureOrMovies = await searchMovies(event.query);
+      log('Searchmovies query: ${event.query}');
 
       failureOrMovies.fold(
         (failure) => emit(SearchMoviesError(failure.toString())),
         (movies) => emit(SearchMoviesLoaded(movies)),
       );
     });
+
+    on<InitSearchMovies>((event, emit) async {
+      emit(SearchMoviesInitial());
+    });
+  }
+
+  @override
+  void onChange(Change<SearchMoviesState> change) {
+    log('SearchMoviesBloc: $change');
+    super.onChange(change);
   }
 }

@@ -51,8 +51,8 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
   @override
   Future<List<MovieModel>> searchMovies(String query) async {
     final response = await client
-        .get(Uri.parse('$BASE_URL/search/movie?query=$query?api_key=$API_KEY'));
-
+        .get(Uri.parse('$BASE_URL/search/movie?query=$query&api_key=$API_KEY'));
+    print('response: ${response.body}');
     if (response.statusCode == 200) {
       final responseBody = json.decode(response.body);
       final List<MovieModel> movies = (responseBody['results'] as List)

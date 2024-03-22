@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:movie_apps/core/errors/server_failure.dart';
 import 'package:movie_apps/data/datasources/movie_remote_data_source.dart';
@@ -19,7 +21,7 @@ class MovieRepositoryImpl extends MovieRepository {
           movieModels.map((model) => model.toEntity()).toList();
       return Right(movies);
     } catch (e) {
-      return Left(ServerFailure());
+      return Left(ServerFailure(e.toString()));
     }
   }
 
@@ -32,7 +34,7 @@ class MovieRepositoryImpl extends MovieRepository {
           movieModels.map((model) => model.toEntity()).toList();
       return Right(movies);
     } catch (e) {
-      return Left(ServerFailure());
+      return Left(ServerFailure(e.toString()));
     }
   }
 
@@ -45,7 +47,8 @@ class MovieRepositoryImpl extends MovieRepository {
           movieModels.map((model) => model.toEntity()).toList();
       return Right(movies);
     } catch (e) {
-      return Left(ServerFailure());
+      log('search repository error: $e');
+      return Left(ServerFailure(e.toString()));
     }
   }
 }

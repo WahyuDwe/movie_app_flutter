@@ -8,7 +8,7 @@ sealed class SearchMoviesEvent extends Equatable {
 }
 
 final class FetchSearchMovies extends SearchMoviesEvent {
-  const FetchSearchMovies(this.query);
+  const FetchSearchMovies({required this.query});
 
   final String query;
 
@@ -18,3 +18,5 @@ final class FetchSearchMovies extends SearchMoviesEvent {
   @override
   String toString() => 'FetchSearchMovies { query: $query }';
 }
+
+final class InitSearchMovies extends SearchMoviesEvent {}
