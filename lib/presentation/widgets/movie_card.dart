@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_apps/core/utils/constant.dart';
 import 'package:movie_apps/domain/entities/movie.dart';
 
 class MovieCard extends StatelessWidget {
@@ -13,14 +14,13 @@ class MovieCard extends StatelessWidget {
       margin: const EdgeInsets.all(5),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(16.0),
       ),
       child: SizedBox(
         height: 200,
         width: 200,
         child: Ink.image(
-          image: NetworkImage(
-              'https://image.tmdb.org/t/p/w500/${movie.posterPath}'),
+          image: NetworkImage(Constant.BASE_IMAGE_URL + movie.posterPath),
           fit: BoxFit.cover,
         ),
       ),

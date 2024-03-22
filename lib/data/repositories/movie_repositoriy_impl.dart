@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:movie_apps/core/errors/server_failure.dart';
+import 'package:movie_apps/core/utils/mapper.dart';
 import 'package:movie_apps/data/datasources/movie_remote_data_source.dart';
 import 'package:movie_apps/data/models/movie_model.dart';
 import 'package:movie_apps/domain/entities/movie.dart';
@@ -17,8 +18,7 @@ class MovieRepositoryImpl extends MovieRepository {
     try {
       final List<MovieModel> movieModels =
           await remoteDataSource.getPopularMovies();
-      final List<Movie> movies =
-          movieModels.map((model) => model.toEntity()).toList();
+      final List<Movie> movies = Mapper().toEntityMovie(movieModels);
       return Right(movies);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
@@ -30,8 +30,7 @@ class MovieRepositoryImpl extends MovieRepository {
     try {
       final List<MovieModel> movieModels =
           await remoteDataSource.getTrendingMovies();
-      final List<Movie> movies =
-          movieModels.map((model) => model.toEntity()).toList();
+      final List<Movie> movies = Mapper().toEntityMovie(movieModels);
       return Right(movies);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
@@ -43,8 +42,7 @@ class MovieRepositoryImpl extends MovieRepository {
     try {
       final List<MovieModel> movieModels =
           await remoteDataSource.searchMovies(query);
-      final List<Movie> movies =
-          movieModels.map((model) => model.toEntity()).toList();
+      final List<Movie> movies = Mapper().toEntityMovie(movieModels);
       return Right(movies);
     } catch (e) {
       log('search repository error: $e');

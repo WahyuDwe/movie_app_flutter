@@ -8,6 +8,7 @@ class Mapper {
           title: e.title,
           overview: e.overview,
           posterPath: e.posterPath,
-        ));
+        ),
+    ).toList();
   }
 }

@@ -16,7 +16,7 @@ class TrendingMoviesBloc
       emit(TrendingMoviesLoading());
       final failureOrMovies = await getTrendingMovies();
       failureOrMovies.fold(
-        (failure) => emit(TrendingMoviesError(failure.toString())),
+        (failure) => emit(TrendingMoviesError(failure.message)),
         (movies) => emit(TrendingMoviesLoaded(movies)),
       );
     });

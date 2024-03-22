@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_apps/presentation/bloc/popular_movies/popular_movies_bloc.dart';
 import 'package:movie_apps/presentation/bloc/search_movies/search_movies_bloc.dart';
 import 'package:movie_apps/presentation/bloc/trending_movies/trending_movies_bloc.dart';
 import 'package:movie_apps/presentation/pages/movies_list.dart';
@@ -15,93 +14,67 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: false, title: const SearchBarMovie()),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
+      appBar: AppBar(
+        centerTitle: false,
+        title: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
-            BlocBuilder<SearchMoviesBloc, SearchMoviesState>(
-              builder: (context, state) {
-                return switch (state) {
-                  SearchMoviesInitial() => const Center(
-                      child: Text('Please enter a search term'),
-                    ),
-                  SearchMoviesLoading() => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  SearchMoviesLoaded() => state.movies.isEmpty
-                      ? const Center(
-                          child: Text('No movies found'),
-                        )
-                      : MoviesList(movies: state.movies),
-                  SearchMoviesError() => Center(
-                      child: Text(state.msg),
-                    ),
-                };
-              },
-            ),
-            // const Padding(
-            //   padding: EdgeInsets.all(8.0),
-            //   child: Text(
-            //     'Trending Movies',
-            //     style: TextStyle(
-            //       fontSize: 20,
-            //       fontWeight: FontWeight.bold,
-            //     ),
-            //   ),
-            // ),
-            // BlocBuilder<TrendingMoviesBloc, TrendingMoviesState>(
-            //   builder: (context, state) {
-            //     if (state is TrendingMoviesLoading) {
-            //       return const Center(child: CircularProgressIndicator());
-            //     }
-
-            //     if (state is TrendingMoviesLoaded) {
-            //       return MoviesList(movies: state.movies);
-            //     }
-
-            //     if (state is TrendingMoviesError) {
-            //       return Center(
-            //         child: Text(
-            //           state.msg,
-            //           style: const TextStyle(color: Colors.red),
-            //         ),
-            //       );
-            //     }
-            //     return Container();
-            //   },
-            // ),
-
-            // const SizedBox(height: 20),
-            // // Popular Movies
-            // const Padding(
-            //   padding: EdgeInsets.all(8.0),
-            //   child: Text(
-            //     'Popular Movies',
-            //     style: TextStyle(
-            //       fontSize: 20,
-            //       fontWeight: FontWeight.bold,
-            //     ),
-            //   ),
-            // ),
-            // BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
-            //   builder: (context, state) {
-            //     if (state is PopularMoviesLoading) {
-            //       return const Center(child: CircularProgressIndicator());
-            //     } else if (state is PopularMoviesLoaded) {
-            //       return MoviesList(movies: state.movies);
-            //     } else if (state is PopularMoviesError) {
-            //       return Text(state.message);
-            //     }
-            //     return Container();
-            //   },
-            // ),
+            Text('Filemku',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            SizedBox(height: 16),
+            SearchBarMovie(),
           ],
         ),
+        toolbarHeight: 100,
       ),
+      body: _searchBlocBuilder(),
+    );
+  }
+
+  SingleChildScrollView _buildTrending() {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          BlocBuilder<TrendingMoviesBloc, TrendingMoviesState>(
+            builder: (context, state) {
+              return switch (state) {
+                TrendingMoviesInitial() => const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                TrendingMoviesLoading() => const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                TrendingMoviesLoaded() => MoviesList(movies: state.movies),
+                TrendingMoviesError() => Center(
+                    child: Text(state.msg),
+                  ),
+              };
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  BlocBuilder<SearchMoviesBloc, SearchMoviesState> _searchBlocBuilder() {
+    return BlocBuilder<SearchMoviesBloc, SearchMoviesState>(
+      builder: (context, state) {
+        return switch (state) {
+          SearchMoviesInitial() => _buildTrending(),
+          SearchMoviesLoading() => const Center(
+              child: CircularProgressIndicator.adaptive(),
+            ),
+          SearchMoviesLoaded() => state.movies.isEmpty
+              ? const Center(
+                  child: Text('Yahhh, filem yang kamu cari tidak ditemukan'),
+                )
+              : MoviesList(movies: state.movies),
+          SearchMoviesError() => Center(
+              child: Text(state.msg),
+            ),
+        };
+      },
     );
   }
 }

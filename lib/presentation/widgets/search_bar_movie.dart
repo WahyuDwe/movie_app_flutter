@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_apps/presentation/bloc/search_movies/search_movies_bloc.dart';
 
@@ -32,9 +32,31 @@ class _SearchBarMovieState extends State<SearchBarMovie> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    // return TextField(
+    //   controller: _textController,
+    //   autocorrect: false,
+    //   onChanged: (text) {
+    //     if (text.isEmpty) {
+    //       _searchMoviesBloc.add(InitSearchMovies());
+    //     } else {
+    //       _searchMoviesBloc.add(FetchSearchMovies(query: text));
+    //     }
+    //   },
+    //   decoration: InputDecoration(
+    //     prefixIcon: const Icon(Icons.search),
+    //     suffixIcon: GestureDetector(
+    //       onTap: _onClearTapped,
+    //       child: const Icon(Icons.clear),
+    //     ),
+    //     border: InputBorder.none,
+    //     hintText: 'Cari filem...',
+    //   ),
+    // );
+    return CupertinoSearchTextField(
       controller: _textController,
-      autocorrect: false,
+      prefixIcon: const Icon(CupertinoIcons.search),
+      placeholder: 'Cari filem...',
+      suffixIcon: const Icon(CupertinoIcons.clear_thick_circled),
       onChanged: (text) {
         if (text.isEmpty) {
           _searchMoviesBloc.add(InitSearchMovies());
@@ -42,15 +64,8 @@ class _SearchBarMovieState extends State<SearchBarMovie> {
           _searchMoviesBloc.add(FetchSearchMovies(query: text));
         }
       },
-      decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.search),
-        suffixIcon: GestureDetector(
-          onTap: _onClearTapped,
-          child: const Icon(Icons.clear),
-        ),
-        border: InputBorder.none,
-        hintText: 'Enter a search term',
-      ),
+      onSuffixTap: _onClearTapped,
+
     );
   }
 }

@@ -8,7 +8,7 @@ class GetPopularMovies {
 
   GetPopularMovies(this.repository);
 
-  Future<Either<Failure, List<Movie>>> call() async {
+  Future<Either<ServerFailure, List<Movie>>> call() async {
     return await repository.getPopularMovies();
   }
 }
