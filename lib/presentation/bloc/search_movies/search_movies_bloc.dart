@@ -19,7 +19,7 @@ class SearchMoviesBloc extends Bloc<SearchMoviesEvent, SearchMoviesState> {
       log('Searchmovies query: ${event.query}');
 
       failureOrMovies.fold(
-        (failure) => emit(SearchMoviesError(failure.message)),
+        (failure) => emit(SearchMoviesError(failure.toString())),
         (movies) => emit(SearchMoviesLoaded(movies)),
       );
     });

@@ -45,8 +45,8 @@ class MovieRepositoryImpl extends MovieRepository {
       final List<Movie> movies = Mapper().toEntityMovie(movieModels);
       return Right(movies);
     } catch (e) {
-      log('search repository error: $e');
-      return Left(ServerFailure(e.toString()));
+      log('repository -> searchMovies error: $e');
+      return Left(ServerFailure('Pastikan koneksi internet Anda stabil'));
     }
   }
 }

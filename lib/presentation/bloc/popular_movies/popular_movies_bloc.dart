@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_apps/core/errors/server_failure.dart';
 import 'package:movie_apps/domain/entities/movie.dart';
 import 'package:movie_apps/domain/usecases/get_popular_movie.dart';
 
@@ -14,7 +15,13 @@ class PopularMoviesBloc extends Bloc<PopularMoviesEvent, PopularMoviesState> {
       emit(PopularMoviesLoading());
       final failureOrMovies = await getPopularMovies();
       failureOrMovies.fold(
-        (failure) => emit(PopularMoviesError(failure.message)),
+          (failure) {
+            if (failure is ServerFailure) {
+              emit(PopularMoviesError(failure.message));
+            } else {
+              emit(const PopularMoviesError('Server Failure'));
+            }
+          },
         (movies) => emit(PopularMoviesLoaded(movies)),
       );
     });

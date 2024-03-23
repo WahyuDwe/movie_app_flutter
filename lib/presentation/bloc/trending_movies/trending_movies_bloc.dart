@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_apps/core/errors/server_failure.dart';
 import 'package:movie_apps/domain/entities/movie.dart';
 import 'package:movie_apps/domain/usecases/get_trending_movies.dart';
 
@@ -16,7 +17,13 @@ class TrendingMoviesBloc
       emit(TrendingMoviesLoading());
       final failureOrMovies = await getTrendingMovies();
       failureOrMovies.fold(
-        (failure) => emit(TrendingMoviesError(failure.message)),
+            (failure) {
+          if (failure is ServerFailure) {
+            emit(TrendingMoviesError(failure.message));
+          } else {
+            emit(const TrendingMoviesError('Server Failure'));
+          }
+        },
         (movies) => emit(TrendingMoviesLoaded(movies)),
       );
     });
