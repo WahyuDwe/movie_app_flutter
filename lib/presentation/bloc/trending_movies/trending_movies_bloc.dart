@@ -16,8 +16,7 @@ class TrendingMoviesBloc
     on<FetchTrendingMovies>((event, emit) async {
       emit(TrendingMoviesLoading());
       final failureOrMovies = await getTrendingMovies();
-      failureOrMovies.fold(
-            (failure) {
+      failureOrMovies.fold((failure) {
           if (failure is ServerFailure) {
             emit(TrendingMoviesError(failure.message, failure.code));
           } else {

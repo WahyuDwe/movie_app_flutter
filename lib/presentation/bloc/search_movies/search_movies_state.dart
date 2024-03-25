@@ -18,7 +18,8 @@ final class SearchMoviesLoaded extends SearchMoviesState {
 }
 
 final class SearchMoviesError extends SearchMoviesState {
-  final String msg;
+  final String? msg;
+  final int? code;
 
-  const SearchMoviesError(this.msg);
+  const SearchMoviesError(this.msg, this.code);
 }

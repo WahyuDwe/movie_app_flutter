@@ -72,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                 )
               : MoviesList(movies: state.movies),
           SearchMoviesError() => Center(
-              child: Text(state.msg),
+              child: Text(state.msg ?? ''),
             ),
         };
       },
