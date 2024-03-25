@@ -32,26 +32,6 @@ class _SearchBarMovieState extends State<SearchBarMovie> {
 
   @override
   Widget build(BuildContext context) {
-    // return TextField(
-    //   controller: _textController,
-    //   autocorrect: false,
-    //   onChanged: (text) {
-    //     if (text.isEmpty) {
-    //       _searchMoviesBloc.add(InitSearchMovies());
-    //     } else {
-    //       _searchMoviesBloc.add(FetchSearchMovies(query: text));
-    //     }
-    //   },
-    //   decoration: InputDecoration(
-    //     prefixIcon: const Icon(Icons.search),
-    //     suffixIcon: GestureDetector(
-    //       onTap: _onClearTapped,
-    //       child: const Icon(Icons.clear),
-    //     ),
-    //     border: InputBorder.none,
-    //     hintText: 'Cari filem...',
-    //   ),
-    // );
     return CupertinoSearchTextField(
       controller: _textController,
       prefixIcon: const Icon(CupertinoIcons.search),
