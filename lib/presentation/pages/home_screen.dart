@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
           TrendingMoviesLoading() => const Center(
               child: CircularProgressIndicator.adaptive(),
             ),
-          TrendingMoviesLoaded() => Expanded(child: MoviesList(movies: state.movies)),
+          TrendingMoviesLoaded() => MoviesList(movies: state.movies),
           TrendingMoviesError() => Center(
               child: Text(
                 'the message error is ${state.msg} \n and the error code is ${state.code}',

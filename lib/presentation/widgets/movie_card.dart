@@ -19,9 +19,17 @@ class MovieCard extends StatelessWidget {
       child: SizedBox(
         height: 200,
         width: 200,
-        child: Ink.image(
-          image: NetworkImage(Constant.BASE_IMAGE_URL + movie.posterPath),
+        child: Image.network(
+          Constant.BASE_IMAGE_URL + movie.posterPath,
           fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return const Center(
+              child: Icon(
+                Icons.error,
+                color: Colors.red,
+              ),
+            );
+          },
         ),
       ),
     );
