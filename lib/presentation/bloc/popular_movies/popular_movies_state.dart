@@ -18,7 +18,8 @@ final class PopularMoviesLoaded extends PopularMoviesState {
 }
 
 final class PopularMoviesError extends PopularMoviesState {
-  final String message;
+  final String? message;
+  final int? code;
 
-  const PopularMoviesError(this.message);
+  const PopularMoviesError(this.message, this.code);
 }

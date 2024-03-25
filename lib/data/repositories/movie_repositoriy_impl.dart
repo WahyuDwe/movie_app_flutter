@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
+import 'package:movie_apps/core/errors/server_exception.dart';
 import 'package:movie_apps/core/errors/server_failure.dart';
 import 'package:movie_apps/core/utils/mapper.dart';
 import 'package:movie_apps/data/datasources/movie_remote_data_source.dart';
@@ -20,8 +21,12 @@ class MovieRepositoryImpl extends MovieRepository {
           await remoteDataSource.getPopularMovies();
       final List<Movie> movies = Mapper().toEntityMovie(movieModels);
       return Right(movies);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
+    } on ServerException catch (e) {
+      log('repository ServerException -> TrendingMovies error: $e');
+      return Left(ServerFailure(message: e.msg, code: e.code));
+    }
+    catch (e) {
+      return Left(ServerFailure(message: e.toString(), code: null));
     }
   }
 
@@ -32,8 +37,12 @@ class MovieRepositoryImpl extends MovieRepository {
           await remoteDataSource.getTrendingMovies();
       final List<Movie> movies = Mapper().toEntityMovie(movieModels);
       return Right(movies);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
+    } on ServerException catch (e) {
+      log('repository ServerException -> TrendingMovies error: $e');
+      return Left(ServerFailure(message: e.msg, code: e.code));
+    }
+    catch (e) {
+      return Left(ServerFailure(message: e.toString(), code: null));
     }
   }
 
@@ -44,9 +53,13 @@ class MovieRepositoryImpl extends MovieRepository {
           await remoteDataSource.searchMovies(query);
       final List<Movie> movies = Mapper().toEntityMovie(movieModels);
       return Right(movies);
-    } catch (e) {
+    } on ServerException catch (e) {
+      log('repository ServerException -> searchMovies error: $e');
+      return Left(ServerFailure(message: e.msg, code: e.code));
+    }
+    catch (e) {
       log('repository -> searchMovies error: $e');
-      return Left(ServerFailure('Pastikan koneksi internet Anda stabil'));
+      return Left(ServerFailure(message: e.toString(), code: null));
     }
   }
 }

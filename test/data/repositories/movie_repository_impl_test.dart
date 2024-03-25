@@ -73,7 +73,7 @@ void main() {
       'should return ServerFailure when the call trending movie to remote data source is unsuccessfully',
       () async {
     when(mockMovieRemoteDataSource.getTrendingMovies())
-        .thenThrow(ServerException());
+        .thenThrow(ServerException(msg: '', code: null));
 
     final result = await repository.getTrendingMovie();
 
@@ -84,7 +84,7 @@ void main() {
       'should return ServerFailure when the call search movie to remote data source is unsuccessfully',
       () async {
     when(mockMovieRemoteDataSource.searchMovies(tQuery))
-        .thenThrow(ServerException());
+        .thenThrow(ServerException(msg: '', code: null));
 
     final result = await repository.searchMovies(tQuery);
 
@@ -95,7 +95,7 @@ void main() {
       'should return ServerFailure when the call to remote data source is unsuccessfully',
       () async {
     when(mockMovieRemoteDataSource.getPopularMovies())
-        .thenThrow(ServerException());
+        .thenThrow(ServerException(msg: '', code: null));
 
     final result = await repository.getPopularMovies();
 

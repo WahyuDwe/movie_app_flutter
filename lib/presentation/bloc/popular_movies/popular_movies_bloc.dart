@@ -17,9 +17,9 @@ class PopularMoviesBloc extends Bloc<PopularMoviesEvent, PopularMoviesState> {
       failureOrMovies.fold(
           (failure) {
             if (failure is ServerFailure) {
-              emit(PopularMoviesError(failure.message));
+              emit(PopularMoviesError(failure.message, failure.code));
             } else {
-              emit(const PopularMoviesError('Server Failure'));
+              emit(const PopularMoviesError('Server Failure', null));
             }
           },
         (movies) => emit(PopularMoviesLoaded(movies)),

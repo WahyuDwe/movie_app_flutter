@@ -19,8 +19,13 @@ class HomeScreen extends StatelessWidget {
         title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Filemku',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            Text(
+              'Filemku',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             SizedBox(height: 16),
             SearchBarMovie(),
           ],
@@ -31,29 +36,24 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  SingleChildScrollView _buildTrending() {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          BlocBuilder<TrendingMoviesBloc, TrendingMoviesState>(
-            builder: (context, state) {
-              return switch (state) {
-                TrendingMoviesInitial() => const Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  ),
-                TrendingMoviesLoading() => const Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  ),
-                TrendingMoviesLoaded() => MoviesList(movies: state.movies),
-                TrendingMoviesError() => Center(
-                    child: Text(state.msg),
-                  ),
-              };
-            },
-          ),
-        ],
-      ),
+  BlocBuilder<TrendingMoviesBloc, TrendingMoviesState> _buildTrending() {
+    return BlocBuilder<TrendingMoviesBloc, TrendingMoviesState>(
+      builder: (context, state) {
+        return switch (state) {
+          TrendingMoviesInitial() => const Center(
+              child: CircularProgressIndicator.adaptive(),
+            ),
+          TrendingMoviesLoading() => const Center(
+              child: CircularProgressIndicator.adaptive(),
+            ),
+          TrendingMoviesLoaded() => Expanded(child: MoviesList(movies: state.movies)),
+          TrendingMoviesError() => Center(
+              child: Text(
+                'the message error is ${state.msg} \n and the error code is ${state.code}',
+              ),
+            ),
+        };
+      },
     );
   }
 
@@ -67,7 +67,8 @@ class HomeScreen extends StatelessWidget {
             ),
           SearchMoviesLoaded() => state.movies.isEmpty
               ? const Center(
-                  child: Text('Yahhh, filem yang kamu cari tidak ditemukan'),
+                  child: Text(
+                      'Yahhh, filem yang kamu cari tidak ditemukan 😓😓😓'),
                 )
               : MoviesList(movies: state.movies),
           SearchMoviesError() => Center(

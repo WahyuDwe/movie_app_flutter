@@ -1,5 +1,3 @@
-import 'package:movie_apps/domain/entities/movie.dart';
-
 class MovieModel {
   final int id;
   final String title;

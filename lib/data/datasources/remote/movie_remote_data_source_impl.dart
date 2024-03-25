@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:movie_apps/core/errors/server_exception.dart';
 import 'package:movie_apps/core/utils/constant.dart';
@@ -13,13 +14,10 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
 
   MovieRemoteDataSourceImpl({required this.client});
 
-  static const BASE_URL = 'https://api.themoviedb.org/3';
-  static const API_KEY = '8bdb4d221b7ca95aa2c0ea30b6a3dda4';
-
   @override
   Future<List<MovieModel>> getPopularMovies() async {
     final response = await client.get(
-      Uri.parse("${Constant.BASE_URL}/movie/popular?api_key=$API_KEY"),
+      Uri.parse("${Constant.BASE_URL}/movie/popular?api_key=${Constant.API_KEY}"),
     );
 
     if (response.statusCode == 200) {
@@ -29,14 +27,15 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
           .toList();
       return movies;
     } else {
-      throw ServerException();
+      log('RemoteDataSource -> getPopularMovies code: ${response.statusCode}');
+      throw ServerException(msg: response.reasonPhrase, code: response.statusCode);
     }
   }
 
   @override
   Future<List<MovieModel>> getTrendingMovies() async {
     final response = await client
-        .get(Uri.parse('${Constant.BASE_URL}/trending/movie/day?api_key=$API_KEY'));
+        .get(Uri.parse('${Constant.BASE_URL}/trending/movie/day?api_key=${Constant.API_KEY}'));
 
     if (response.statusCode == 200) {
       final responseBody = json.decode(response.body);
@@ -45,14 +44,15 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
           .toList();
       return movies;
     } else {
-      throw ServerException();
+      log('RemoteDataSource -> getTrendingMovies code: ${response.statusCode}');
+      throw ServerException(msg: response.reasonPhrase, code: response.statusCode);
     }
   }
 
   @override
   Future<List<MovieModel>> searchMovies(String query) async {
     final response = await client
-        .get(Uri.parse('${Constant.BASE_URL}/search/movie?query=$query&api_key=$API_KEY'));
+        .get(Uri.parse('${Constant.BASE_URL}/search/movie?query=$query&api_key=${Constant.API_KEY}'));
     if (response.statusCode == 200) {
       final responseBody = json.decode(response.body);
       final List<MovieModel> movies = (responseBody['results'] as List)
@@ -60,7 +60,8 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
           .toList();
       return movies;
     } else {
-      throw ServerException();
+      log('RemoteDataSource -> searchMovies code: ${response.statusCode}');
+      throw ServerException(msg: response.reasonPhrase, code: response.statusCode);
     }
   }
 }

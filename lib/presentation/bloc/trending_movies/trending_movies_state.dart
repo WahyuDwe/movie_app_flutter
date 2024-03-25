@@ -18,7 +18,8 @@ final class TrendingMoviesLoaded extends TrendingMoviesState {
 }
 
 final class TrendingMoviesError extends TrendingMoviesState {
-  final String msg;
+  final String? msg;
+  final int? code;
 
-  const TrendingMoviesError(this.msg);
+  const TrendingMoviesError(this.msg, this.code);
 }

@@ -19,9 +19,9 @@ class TrendingMoviesBloc
       failureOrMovies.fold(
             (failure) {
           if (failure is ServerFailure) {
-            emit(TrendingMoviesError(failure.message));
+            emit(TrendingMoviesError(failure.message, failure.code));
           } else {
-            emit(const TrendingMoviesError('Server Failure'));
+            emit(const TrendingMoviesError('Server Failure', null));
           }
         },
         (movies) => emit(TrendingMoviesLoaded(movies)),

@@ -1,5 +1,6 @@
 class ServerException {
-  final String msg;
+  final String? msg;
+  final int? code;
 
-  ServerException({this.msg = 'Server error occurred'});
+  ServerException({required this.msg, required this.code});
 }
