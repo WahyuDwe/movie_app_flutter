@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:movie_apps/presentation/bloc/search_movies/search_movies_bloc.dart';
 import 'package:movie_apps/presentation/bloc/trending_movies/trending_movies_bloc.dart';
 import 'package:movie_apps/presentation/pages/movies_list.dart';
@@ -70,11 +71,16 @@ class HomeScreen extends StatelessWidget {
           SearchMoviesLoading() =>
             const Center(child: CircularProgressIndicator.adaptive()),
           SearchMoviesLoaded() => state.movies.isEmpty
-              ? const Center(
-                  child: Text(
-                    'Yahhh, filem yang kamu cari tidak ditemukan 😓😓😓',
+              ? const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Text(
+                      'Yahhh, filem yang kamu cari tidak ditemukan 😓😓😓',
+                    ),
                   ),
-                )
+                ],
+              )
               : MoviesList(movies: state.movies),
           SearchMoviesError() => Center(
               child: Text(state.msg ?? ''),

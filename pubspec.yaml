@@ -26,3 +26,13 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+
+    - assets/animations/splash_loading.json
+    - assets/animations/success_animation.json
+    - assets/animations/error_animation.json
+    - assets/animations/warning_animation.json
+    - assets/animations/empty_list_animation.json
+    - assets/animations/404_error.json
+    - assets/animations/under_construction_animation.json
