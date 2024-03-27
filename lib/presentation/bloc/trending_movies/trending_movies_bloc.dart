@@ -5,6 +5,7 @@ import 'package:movie_apps/domain/entities/movie.dart';
 import 'package:movie_apps/domain/usecases/movie_usecase.dart';
 
 part 'trending_movies_event.dart';
+
 part 'trending_movies_state.dart';
 
 class TrendingMoviesBloc
@@ -16,7 +17,8 @@ class TrendingMoviesBloc
     on<FetchTrendingMovies>((event, emit) async {
       emit(TrendingMoviesLoading());
       final failureOrMovies = await movieUseCase.getTrendingMovie();
-      failureOrMovies.fold((failure) {
+      failureOrMovies.fold(
+        (failure) {
           if (failure is ServerFailure) {
             emit(TrendingMoviesError(failure.message, failure.code));
           } else {

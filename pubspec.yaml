@@ -36,3 +36,4 @@ flutter:
     - assets/animations/empty_list_animation.json
     - assets/animations/404_error.json
     - assets/animations/under_construction_animation.json
+    - assets/animations/empty_search.json
